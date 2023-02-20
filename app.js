@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const constants = require("./constants/constants");
 const controller = require("./controller/controller");
 const {authUser} = require("./middlewares/permissions"); // simple middleware authorization
@@ -127,6 +128,15 @@ app.delete("/api/v1/users/:id", authUser(["admin"]), async (req, res) => {
   }
 });
 
+
+mongoose
+  .connect(process.env.DATABASE_URI)
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch(() => {
+    console.log("There was an error connecting to your database");
+  });
 
 app.listen(PORT, () => {
   // starting up the server
