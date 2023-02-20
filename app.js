@@ -1,4 +1,3 @@
-// module imports from node module
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -8,7 +7,7 @@ const mongoose = require("mongoose");
 const constants = require("./constants/constants");
 const controller = require("./controller/controller");
 const {authUser} = require("./middlewares/authorization"); // simple middleware authorization
-const verifyJWT = require("./middlewares/authentication"); // JWT authorization
+const verifyJWT = require("./middlewares/authentication"); // JWT authentication
 const connectToMongoDB = require("./database/database")
 const joi = require("joi");
 const { validateSchema } = require('./middlewares/validator');
