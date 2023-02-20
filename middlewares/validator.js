@@ -14,6 +14,3 @@ const loginSchema = joi.object({
 
 
 exports.validateSchema = validator(loginSchema);
-
-// const validateData = validator(validateRequest);
-// module.exports = validateData;

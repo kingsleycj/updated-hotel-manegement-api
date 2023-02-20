@@ -14,7 +14,7 @@ A hotel management system that can create rooms, edit rooms, fetch a created roo
 1. clone repository
 2. cd into Home Directory
 3. run npm init
-4. run npm install express nodemon dotenv joi jsonwebtoken
+4. run npm install express nodemon dotenv joi jsonwebtoken mongoose bcrypt
 5. run npm run dev (for nodemon); this will accept changes and make updates to the api whilst still running OR
 6. run npm run start (for node); to activate node on the indicated file
 7. download postman or insomnia or dynamic client extension on VSCode
