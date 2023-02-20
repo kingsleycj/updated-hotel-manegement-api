@@ -1,6 +1,6 @@
 # Hotel Room Management API
 
-A hotel management system that can create rooms, edit rooms, fetch a created room, fetch all created rooms, add roles, add authentication and authorization middlewares, and a validation middle ware
+A hotel management system that can create rooms, edit rooms, fetch a created room, fetch all created rooms, add roles, add authentication and authorization middlewares, and validate a user
 
 ## Based on the requirements requested, the following was satisfied:
 
