@@ -17,7 +17,7 @@ const handleRefreshToken = (req, res) => {
   );
   if (!foundUser) return res.sendStatus(403); //Forbidden
   // evaluate jwt
-  jwt.verify(refreshToken, process.env.DATABASE_URI, (err, decoded) => {
+  jwt.verify(refreshToken, process.env.SECRET_TOKEN, (err, decoded) => {
     if (err || foundUser.username !== decoded.username)
       return res.sendStatus(403);
     const roles = Object.values(foundUser.roles);
@@ -28,7 +28,7 @@ const handleRefreshToken = (req, res) => {
           roles: roles,
         },
       },
-      process.env.DATABASE_URI,
+      process.env.SECRET_TOKEN,
       { expiresIn: "30s" }
     );
     res.json({ accessToken });
