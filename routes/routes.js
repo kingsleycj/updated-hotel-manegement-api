@@ -1,8 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const verifyJWT = require("../middlewares/auth.middleware")
-const authUser = require("../middlewares/permissions")
+const verifyJWT = require("../middlewares/authentication")
+const authUser = require("../middlewares/authorization")
 const controller = require("../controller/controller")
 const {validatorSchema} = require("../middlewares/validator")
 
