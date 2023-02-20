@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const constants = require("./constants/constants");
 const controller = require("./controller/controller");
 const {authUser} = require("./middlewares/permissions"); // simple middleware authorization
@@ -17,7 +18,7 @@ const { MESSAGES } = constants;
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 2030;
 
 
 // verify JSON web tokens
