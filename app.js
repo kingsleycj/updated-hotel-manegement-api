@@ -9,7 +9,7 @@ const {authUser} = require("./middlewares/permissions"); // simple middleware au
 const verifyJWT = require("./middlewares/auth.middleware"); // JWT authorization
 const connectToMongoDB = require("./database/database")
 const joi = require("joi");
-const { validateLogin, validateSchema } = require('./middlewares/validator');
+const { validateSchema } = require('./middlewares/validator');
 const app = express();
 const { MESSAGES } = constants;
 

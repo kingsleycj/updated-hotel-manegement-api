@@ -1,6 +1,6 @@
 const { model, Schema, Types } = require("mongoose");
 const constants = require("constants");
-const { DATABASES } = constants;
+
 const ObjectId = Types.ObjectId;
 
 const room_Schema = new Schema (
@@ -25,6 +25,4 @@ const room_Schema = new Schema (
     }
 );
 
-const Rooms = model(constants.DATABASES, room_Schema)
-
-module.exports = Rooms; 
+module.exports = room_Schema; 
