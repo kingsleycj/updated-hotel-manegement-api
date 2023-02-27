@@ -1,12 +1,18 @@
-const express = require("express");
-const app = express();
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const express = require('express');
+const dotenv = require('dotenv');
 dotenv.config();
-const productRoutes = require("./src/routes/products");
-const orderRoutes = require("./src/routes/orders");
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const constants = require("./constants/constants");
+const controller = require("./controller/controller");
+const {authUser} = require("./middlewares/authorization"); // simple middleware authorization
+const verifyJWT = require("./middlewares/authentication"); // JWT authentication
+const connectToMongoDB = require("./database/database")
+const joi = require("joi");
+const { validateSchema } = require('./middlewares/validator');
+const app = express();
+const { MESSAGES } = constants;
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
