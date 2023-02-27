@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kingsleycj/updated-hotel-manegement-api.git"
+    "url": "git+https://github.com/kingsleycj/hotelAPI-typescript-version.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kingsleycj/updated-hotel-manegement-api/issues"
+    "url": "https://github.com/kingsleycj/hotelAPI-typescript-version.git/issues"
   },
-  "homepage": "https://github.com/kingsleycj/updated-hotel-manegement-api#readme",
+  "homepage": "https://github.com/kingsleycj/hotelAPI-typescript-version.git#readme",
   "devDependencies": {
     "typescript": "^4.9.5"
   },
@@ -31,3 +31,4 @@
     "nodemon": "^2.0.20"
   }
 }
+
