@@ -1,22 +1,33 @@
 {
-  "name": "hotelmanagement-project",
+  "name": "updated-hotel-manegement-api",
   "version": "1.0.0",
-  "description": "hotel room management api",
+  "description": "A hotel management system that can create rooms, edit rooms, fetch a created room, fetch all created rooms, add roles, add authentication and authorization middlewares, and validate a user",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingsleycj/updated-hotel-manegement-api.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kingsleycj/updated-hotel-manegement-api/issues"
+  },
+  "homepage": "https://github.com/kingsleycj/updated-hotel-manegement-api#readme",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
   "dependencies": {
-    "cors": "^2.8.5",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "joi": "^17.8.1",
+    "joi": "^17.8.3",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.9.1",
-    "nodemon": "^2.0.20",
-    "yarn": "^1.22.19"
+    "mongoose": "^6.10.0",
+    "nodemon": "^2.0.20"
   }
 }

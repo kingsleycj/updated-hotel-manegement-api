@@ -1,147 +1,56 @@
-const express = require('express');
-const dotenv = require('dotenv');
-dotenv.config();
-const cors = require("cors");
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const constants = require("./constants/constants");
-const controller = require("./controller/controller");
-const {authUser} = require("./middlewares/authorization"); // simple middleware authorization
-const verifyJWT = require("./middlewares/authentication"); // JWT authentication
-const connectToMongoDB = require("./database/database")
-const joi = require("joi");
-const { validateSchema } = require('./middlewares/validator');
+const express = require("express");
 const app = express();
-const { MESSAGES } = constants;
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+const productRoutes = require("./src/routes/products");
+const orderRoutes = require("./src/routes/orders");
 
-app.use(cors());
-app.use(express.json());
+app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 2030;
-
-
-// verify JSON web tokens
-app.use(verifyJWT);
-
-// validation request
-app.post("/login", (req, res) => {
-  const { error, value } = validateSchema(req.body)
-
-  if (error) {
-    console.log(error)
-    return res.send(error.details)
-  }
-})
-
-// base api
-app.get("/", (req, res) => {
-  req.body
-  res.status(200).send({ messages: MESSAGES.FETCHED, success: true });
-});
-
-// fetch all rooms
-app.get("/api/v1/users", authUser(["admin"]), async (req, res) => {
-  try {
-    const rooms = await controller.fetchAllRooms();
-    res.status(200).send({
-      message: MESSAGES.FETCHED,
-      success: true,
-      data: rooms,
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || MESSAGES.ERROR,
-      success: false,
-    });
-  }
-});
-
-// fetch a room
-app.get("/api/v1/users/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const data = await controller.fetchSingleRoomById(id);
-    res.status(200).send({
-      message: MESSAGES.FETCHED,
-      success: true,
-      data,
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || MESSAGES.ERROR,
-      success: false,
-    });
-  }
-});
-
-// create a new room
-app.post("/api/v1/users", authUser(["admin"]), async (req, res) => {
-  try {
-    const data = await controller.createRoom(req.body);
-    res.status(201).send({
-      message: MESSAGES.CREATED,
-      success: true,
-      data,
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || MESSAGES.ERROR,
-      success: false,
-    });
-  }
-});
-
-// edit a room 
-app.patch("/api/v1/users/:id", authUser(["admin"]), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const body = req.body;
-    const data = await controller.editRoomById(id, body);
-    res.status(200).send({
-      message: MESSAGES.UPDATED,
-      success: true,
-      data,
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || MESSAGES.ERROR,
-      success: false,
-    });
-  }
-});
-
-// delete a room
-app.delete("/api/v1/users/:id", authUser(["admin"]), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const data = await controller.deleteRoomById(id);
-    res.status(200).send({
-      message: MESSAGES.DELETED,
-      success: true,
-      data,
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || MESSAGES.ERROR,
-      success: false,
-    });
-  }
-});
-
-
+mongoose.set("strictQuery", true);
 mongoose
-  .connect(process.env.DATABASE_URI)
-  .then(() => {
-    console.log("Connected to the database");
+  .connect(process.env.MONGO_ATLAS_DB, {
+    // useMongoClient: true,
+    // useNewUrlParser: true,
+    // useCreateIndex: true,
   })
-  .catch(() => {
-    console.log("There was an error connecting to your database");
+  .then(() => console.log("MongoDB connected..."))
+  .catch((err) => console.log(err));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
+  next();
+});
+
+// Routes that should handle requests
+app.use("/products", productRoutes);
+app.use("/orders", orderRoutes);
+
+app.use((req, res, next) => {
+  const error = new Error("Not Found");
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
   });
-
-app.listen(PORT, () => {
-  // starting up the server
-  connectToMongoDB();
-  console.log(`Server started on port: ${PORT}`);
-})
-
+});
 module.exports = app;
